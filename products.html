@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>База продуктов</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header><h1>База продуктов (на 100 г)</h1></header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Калькулятор</a></li>
+      <li><a href="diary.html">Дневник</a></li>
+      <li><a href="products.html" class="active">Продукты</a></li>
+      <li><a href="stats.html">Статистика</a></li>
+      <li><a href="goals.html">Цели</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <label>Поиск
+      <input type="search" id="search" placeholder="Например: курица" />
+    </label>
+
+    <form id="addProductForm">
+      <h2>Добавить свой продукт</h2>
+      <label>Название <input type="text" id="pName" required /></label>
+      <label>Ккал на 100 г <input type="number" id="pKcal" min="0" required /></label>
+      <label>Белки <input type="number" id="pP" min="0" step="0.1" required /></label>
+      <label>Жиры <input type="number" id="pF" min="0" step="0.1" required /></label>
+      <label>Углеводы <input type="number" id="pC" min="0" step="0.1" required /></label>
+      <button type="submit">Добавить в справочник</button>
+    </form>
+
+    <h2>Список продуктов</h2>
+    <table id="productsTable">
+      <thead>
+        <tr><th>Название</th><th>Ккал</th><th>Б</th><th>Ж</th><th>У</th><th></th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <button id="resetCustom" class="danger" type="button">Сбросить пользовательские продукты</button>
+  </main>
+
+  <footer><p>© 2025 Справочник продуктов</p></footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/products.js"></script>
+</body>
+</html>

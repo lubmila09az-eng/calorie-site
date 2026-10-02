@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Цели и нормы</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header><h1>Цели и нормы КБЖУ</h1></header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Калькулятор</a></li>
+      <li><a href="diary.html">Дневник</a></li>
+      <li><a href="products.html">Продукты</a></li>
+      <li><a href="stats.html">Статистика</a></li>
+      <li><a href="goals.html" class="active">Цели</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <p>Здесь отображается ваша текущая норма, рассчитанная на странице
+       «Калькулятор». Можно задать цель вручную.</p>
+
+    <form id="goalsForm">
+      <label>Калории <input type="number" id="gKcal" min="800" max="6000" required /></label>
+      <label>Белки, г <input type="number" id="gP" min="0" max="500" required /></label>
+      <label>Жиры, г <input type="number" id="gF" min="0" max="500" required /></label>
+      <label>Углеводы, г <input type="number" id="gC" min="0" max="800" required /></label>
+      <button type="submit">Сохранить цель</button>
+    </form>
+
+    <h2>Прогресс за сегодня</h2>
+    <div id="progressBox"></div>
+  </main>
+
+  <footer><p>© 2025 Цели и нормы</p></footer>
+
+  <script src="js/storage.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const goal = Storage.getGoal() || {
+        calories: 2000, protein: 120, fat: 70, carbs: 220
+      };
+
+      document.getElementById('gKcal').value = goal.calories;
+      document.getElementById('gP').value = goal.protein;
+      document.getElementById('gF').value = goal.fat;
+      document.getElementById('gC').value = goal.carbs;
+
+      renderProgress(goal);
+
+      document.getElementById('goalsForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newGoal = {
+          calories: +document.getElementById('gKcal').value,
+          protein: +document.getElementById('gP').value,
+          fat: +document.getElementById('gF').value,
+          carbs: +document.getElementById('gC').value
+        };
+        Storage.saveGoal(newGoal);
+        renderProgress(newGoal);
+        alert('Цель сохранена!');
+      });
+    });
+
+    function renderProgress(goal) {
+      const today = new Date().toISOString().slice(0, 10);
+      const t = Storage.dayTotals(today);
+
+      const lines = [
+        ['Калории', t.kcal, goal.calories, 'ккал'],
+        ['Белки', t.p, goal.protein, 'г'],
+        ['Жиры', t.f, goal.fat, 'г'],
+        ['Углеводы', t.c, goal.carbs, 'г']
+      ];
+
+      document.getElementById('progressBox').innerHTML = lines.map(([name, cur, max, unit]) => {
+        const pct = Math.min(100, Math.round((cur / max) * 100));
+        return `
+          <div class="card" style="border-top-color:#43a047">
+            <h3>${name}: ${cur} / ${max} ${unit}</h3>
+            <div class="bar"><span style="width:${pct}%"></span></div>
+            <div class="unit">${pct}%</div>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

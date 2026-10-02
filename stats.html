@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Статистика питания</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header><h1>Статистика и графики</h1></header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Калькулятор</a></li>
+      <li><a href="diary.html">Дневник</a></li>
+      <li><a href="products.html">Продукты</a></li>
+      <li><a href="stats.html" class="active">Статистика</a></li>
+      <li><a href="goals.html">Цели</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h2>Калории за последние 7 дней</h2>
+    <canvas id="chartKcal" height="220"></canvas>
+
+    <h2>БЖУ за последние 7 дней</h2>
+    <canvas id="chartMacros" height="220"></canvas>
+
+    <h2>Сводка</h2>
+    <div id="summary"></div>
+  </main>
+
+  <footer><p>© 2025 Статистика питания</p></footer>
+
+  <script src="js/storage.js"></script>
+  <script src="js/stats.js"></script>
+</body>
+</html>
